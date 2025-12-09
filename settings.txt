@@ -1,0 +1,4 @@
+root: C:\Users\30580\Desktop\学习\exercise\获取数据 
+path: C:\Program Files\nodejs 
+arch: 64 
+proxy: none
