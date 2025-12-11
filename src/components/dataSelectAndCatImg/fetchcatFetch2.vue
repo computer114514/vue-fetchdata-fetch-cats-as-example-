@@ -1,9 +1,11 @@
 <script lang="js" setup>
-    import {ref,onMounted} from "vue"
+    import {ref,onMounted,defineEmits} from "vue"
 
     const loading=ref(true);
     const error=ref(null)
     const information=ref({})
+    const emit=defineEmits(['CatList'])
+
     async function fetchData(){
         try{
             const res=await fetch("https://api.thecatapi.com/v1/images/search")
@@ -14,7 +16,10 @@
             //边界判断：抓取失败
             // information.value.push(await res.json());
             information.value = await res.json()   // 把 JSON 塞进盒子,整个替换
+            //因为await会阻塞async函数，获取到数据后才执行urlData的赋值
             console.log("test")
+            const urlData=information.value[0]
+            emit('CatList',urlData)
         }
         catch(e){
             error.value=e.message;
@@ -24,9 +29,19 @@
         }
     }
 
+
+
+
+
+// console.log(information.value[0].url)
+//12.10下午的bug保留，你忽略了异步函数的原理，没有等挂载完后再读取，
+// 连fetchData数据都没拿到，怎么读取？？？？？？？？
+
+
     onMounted(()=>{
         fetchData();
-            console.log(information.value.url)
+        //12.10下午第二个bug保留，这是一个异步函数，onMounted是组件挂载完成，不是数据获取完成！因为是异步！
+
     })
 </script>
 
@@ -49,10 +64,6 @@
         height:570px;
         overflow: hidden;
     }
-    img{
-        width:500px;
-        height:570px;
-    }
     /* .cat-img{
         width:100%;
         height:auto;
@@ -60,7 +71,7 @@
         box-shadow:1px 1px 1px black;
     } */
      /* 版本1:正常比例 */
-         .cat-img{
+    .cat-img{
         width:500px;
         height:570px;
         object-fit: cover;
