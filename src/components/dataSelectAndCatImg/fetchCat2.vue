@@ -68,7 +68,4 @@
         height:700px;
         background-color: #F5F5F5;
     }
-    /* .el-button{
-        margin:0 230px;
-    } */
 </style>

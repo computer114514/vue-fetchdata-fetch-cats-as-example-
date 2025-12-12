@@ -36,6 +36,5 @@
         height:570px;
         object-fit: cover;
         border-radius: 10%;
-        /* box-shadow:1px 1px 1px black; */
     }
 </style>
